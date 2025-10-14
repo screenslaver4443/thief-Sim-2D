@@ -1,0 +1,21 @@
+#ifndef OBJECT_H
+#define OBJECT_H
+
+class Object {
+    protected: 
+        //ImageFilepath sprite;
+        bool hasGravity;
+        float posX;
+        float posY;
+        float sizeX;
+        float sizeY;
+    public:
+        Object();
+        Object(bool, float, float, float, float);
+        void setPosX(float);
+        void setPosY(float);
+        float getSizeX();
+        float getSizeY();
+};
+
+#endif
