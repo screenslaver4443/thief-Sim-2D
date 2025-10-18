@@ -3,6 +3,8 @@
 //
 #include "Game.h"
 
+#include "Level.h"
+
 // Define static member variables
 std::map<std::string, Level*> Game::scenes;
 Level* Game::current_scene = nullptr;
@@ -21,7 +23,8 @@ void Game::cleanup() {
 }
 
 void Game::init() {
-  // Implementation to be added
+  scenes.insert({"test", new Level});
+  // more here
 }
 
 void Game::update(float deltaTime) {
