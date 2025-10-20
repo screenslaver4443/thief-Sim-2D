@@ -1,5 +1,6 @@
 #include <chrono>
 #include <iostream>
+#include <thread>
 
 #include "Game.h"
 
@@ -12,7 +13,7 @@ int main() {
         currentFrameTime - lastFrameTime;
     float deltaTime = deltaTimeRaw.count();
     lastFrameTime = currentFrameTime;
-    std::cout << "Delta Time: " << deltaTime << endl;
+    std::cout << "Delta Time: " << deltaTime << std::endl;
     Game::update(deltaTime);
   }
 }
