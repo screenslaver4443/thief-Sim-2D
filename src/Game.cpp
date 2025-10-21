@@ -1,13 +1,13 @@
 //
 // Created by Nikolai Pesudovs on 14/10/2025.
 //
-#include "Game.h"
+#include "game.h"
 
 // constructor
 Game::Game(sf::RenderWindow &win)
     : window(win), state(GameState::MAIN_MENU),
       levelsBeaten(0), suspicion(0), heartsRemaining(3),
-      suspicionTimer(0.f), soundLevel(120.0f)
+      suspicionTimer(0.f)
 {
     // erm sprite stuff
     // tests if they all load in and pukks them from sprites folder
@@ -47,17 +47,21 @@ Game::Game(sf::RenderWindow &win)
     // back to menu thingy
     menuButton.setTexture(buttonTex);
     menuButton.setScale(0.04f, 0.04f);
-    menuButton.setPosition(300, 15);
+    int menuButtonX = 700, menuButtonY = 15;
+    menuButton.setPosition(menuButtonX, menuButtonY);
 
-    // gang we cant do arial I dont have the file :(
-    if (!font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
-        std::cout << "Missing font file!\n";
+    // Load system font - try macOS fonts first, then Linux fallback
+    if (!font.loadFromFile("/System/Library/Fonts/Helvetica.ttc") &&
+        !font.loadFromFile("/System/Library/Fonts/HelveticaNeue.ttc") &&
+        !font.loadFromFile("/System/Library/Fonts/Menlo.ttc") &&
+        !font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
+        std::cout << "Missing font file! Tried Helvetica, Helvetica Neue, Menlo, and DejaVu Sans\n";
 
     menuText.setFont(font);
     menuText.setString("Menu");
     menuText.setCharacterSize(20);
     menuText.setFillColor(sf::Color::Black);
-    menuText.setPosition(210, 20);
+    menuText.setPosition(menuButtonX + 50, menuButtonY + 15);
 
     // tracks levels beaten in a session :3
     diamondIcon.setTexture(diamondTex);
@@ -69,15 +73,6 @@ Game::Game(sf::RenderWindow &win)
     diamondCount.setFillColor(sf::Color::Black);
     diamondCount.setPosition(550, 140);
     diamondCount.setString("x 0");
-
-    // sound bar (gang I made it scrollable)
-    soundBarBG.setSize(sf::Vector2f(200, 30));
-    soundBarBG.setFillColor(sf::Color(50, 50, 50));
-    soundBarBG.setPosition(520, 420);
-
-    soundBar.setSize(sf::Vector2f(soundLevel, 20));
-    soundBar.setFillColor(sf::Color(100, 200, 255));
-    soundBar.setPosition(510, 420);
 
     // levelzzzzz
     for (int i = 0; i < 3; ++i)
@@ -134,16 +129,6 @@ void Game::processEvents()
                     player.setPosition(100, 400);
                 }
             }
-        }
-
-        if (state == GameState::MAIN_MENU && event.type == sf::Event::KeyPressed)
-        {
-            if (event.key.code == sf::Keyboard::Right && soundLevel < 200)
-                soundLevel += 10;
-            if (event.key.code == sf::Keyboard::Left && soundLevel > 0)
-                soundLevel -= 10;
-
-            soundBar.setSize(sf::Vector2f(soundLevel, 20));
         }
 
         if (state == GameState::LEVEL && event.type == sf::Event::MouseButtonPressed)
@@ -226,9 +211,6 @@ void Game::render()
         window.draw(diamondIcon);
         diamondCount.setString("x " + std::to_string(levelsBeaten));
         window.draw(diamondCount);
-
-        window.draw(soundBarBG);
-        window.draw(soundBar);
     }
     else if (state == GameState::LEVEL)
     {
