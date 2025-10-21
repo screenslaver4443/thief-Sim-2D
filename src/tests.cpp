@@ -1,11 +1,11 @@
 #include <chrono>
 #include <iostream>
-#include <thread>
 
 #include "Game.h"
 
 int main() {
   Game::init();
+  std::cout << "Initialised" << std::endl;
   auto lastFrameTime = std::chrono::steady_clock::now();
   while (true) {
     auto currentFrameTime = std::chrono::steady_clock::now();
@@ -13,7 +13,8 @@ int main() {
         currentFrameTime - lastFrameTime;
     float deltaTime = deltaTimeRaw.count();
     lastFrameTime = currentFrameTime;
-    std::cout << "Delta Time: " << deltaTime << std::endl;
+    // std::cout << "Delta Time: " << deltaTime << std::endl;
     Game::update(deltaTime);
+    std::cout << 
   }
 }
