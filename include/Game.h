@@ -52,10 +52,6 @@ private:
     int heartsRemaining;
     float suspicionTimer;
 
-    // sound bar (gang I made it scrollable)
-    float soundLevel;
-    sf::RectangleShape soundBarBG, soundBar;
-
     // levelzzzzz
     sf::Sprite levelButtons[3];
     sf::Text levelText[3];
