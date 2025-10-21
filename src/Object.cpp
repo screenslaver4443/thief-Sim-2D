@@ -1,36 +1,26 @@
 #include "Object.h"
 
-Object::Object(bool gravity, float x, float y, float sizex, float sizey)
-    : hasGravity(gravity), posX(x), posY(y), sizeX(sizex), sizeY(sizey)
-{
-}
+Object::Object()
+    : posX(0), posY(0), sizeX(32), sizeY(32), gravity(false), collision(false) {}
 
-void Object::setPosX(float x)
+Object::Object(float x, float y, float width, float height)
+    : posX(x), posY(y), sizeX(width), sizeY(height), gravity(false), collision(false) {}
+
+void Object::setPosition(float x, float y)
 {
     posX = x;
-}
-
-void Object::setPosY(float y)
-{
     posY = y;
 }
+sf::Vector2f Object::getPosition() const { return sf::Vector2f(posX, posY); }
 
-float Object::getPosX()
+void Object::setSize(float w, float h)
 {
-    return posX;
+    sizeX = w;
+    sizeY = h;
 }
+sf::Vector2f Object::getSize() const { return sf::Vector2f(sizeX, sizeY); }
 
-float Object::getPosY()
-{
-    return posY;
-}
-
-float Object::getSizeX()
-{
-    return sizeX;
-}
-
-float Object::getSizeY()
-{
-    return sizeY;
-}
+void Object::setPosX(float x) { posX = x; }
+void Object::setPosY(float y) { posY = y; }
+float Object::getPosX() const { return posX; }
+float Object::getPosY() const { return posY; }

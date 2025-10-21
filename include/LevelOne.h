@@ -3,12 +3,11 @@
 
 #include "Level.h"
 
-// LevelOne: Easy difficulty, default setup
 class LevelOne : public Level
 {
 public:
   LevelOne();
-  void setup() override;
+  void load() override;
 };
 
-#endif // LEVELONE_H
+#endif

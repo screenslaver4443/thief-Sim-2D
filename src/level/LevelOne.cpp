@@ -1,14 +1,13 @@
 #include "LevelOne.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-LevelOne::LevelOne() : Level(900, 700, 0.0f, {}) {}
-
-void LevelOne::setup()
+LevelOne::LevelOne() : Level(800, 600)
 {
+    std::cout << "Level 1 created with dimensions 800x600\n";
+}
 
-    backgroundColor = sf::Color(245, 245, 245);
-
-    diamondPosition = {600.f, 400.f};
-
-    suspicionRate = 1.0f;
+void LevelOne::load()
+{
+    std::cout << "Loading Level 1 assets and entities...\n";
 }

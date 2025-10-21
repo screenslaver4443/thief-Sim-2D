@@ -1,15 +1,24 @@
+// the ally theif will heal the player
+
 #include "AllyThief.h"
+#include "PlayerThief.h"
 #include <iostream>
-using namespace std;
+#include <cmath>
+#include "Person.h"
 
-AllyThief::AllyThief(int bond) {
-    this->bond=bond;
+AllyThief::AllyThief()
+{
+    setName("Ally Thief");
+    setAge(25);
+    setIsAlive(true);
 }
 
-void AllyThief::setBond(int bond) {
-    this->bond=bond;
-}
-
-int AllyThief::getBond() {
-    return bond;
+void AllyThief::healPlayer(PlayerThief &player)
+{
+    const int MAX_HEALTH = 100;
+    if (player.intersects(*this))
+    {
+        player.setHealth(MAX_HEALTH);
+        std::cout << "Ally Thief healed the player to full health!\n";
+    }
 }

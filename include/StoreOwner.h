@@ -1,21 +1,19 @@
-
 #ifndef STOREOWNER_H
 #define STOREOWNER_H
 
 #include "Employee.h"
+#include <SFML/Graphics.hpp>
 
-class StoreOwner : Employee
+class StoreOwner : public Employee
 {
 private:
-    int suspicion;
-    int level;
+    sf::RectangleShape detectionZone;
 
 public:
-    StoreOwner(int, int);
-    int getSuspicion();
-    void setSuspicion(int);
-    int getLevel();
-    void setLevel(int);
+    StoreOwner(int x, int y);
+    void setupZone(float width, float height);
+    sf::RectangleShape getZone() const;
+    bool detectsPlayer(sf::FloatRect playerBounds);
 };
 
 #endif

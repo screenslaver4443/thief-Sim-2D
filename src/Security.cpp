@@ -1,27 +1,30 @@
 #include "Security.h"
+#include <iostream>
+#include <cmath>
+#include "Person.h"
 
-Security::Security(int suspicion, int level)
+Security::Security()
 {
-    this->suspicion = suspicion;
-    this->level = level;
+    this->setHealth(100);
 }
 
-int Security::getSuspicion()
+void Security::chase(PlayerThief &player)
 {
-    return suspicion;
-}
+    sf::Vector2f playerPos = player.getPosition();
+    sf::Vector2f myPos = getPosition();
 
-void Security::setSuspicion(int suspicion)
-{
-    this->suspicion = suspicion;
-}
+    float dx = playerPos.x - myPos.x;
+    float dy = playerPos.y - myPos.y;
+    float dist = std::sqrt(dx * dx + dy * dy);
 
-int Security::getLevel()
-{
-    return level;
-}
-
-void Security::setLevel(int level)
-{
-    this->level = level;
+    if (dist < 150)
+    {
+        std::cout << "Security chasing player!\n";
+        if (player.intersects(*this))
+        {
+            std::cout << "Player caught! Game Over!\n";
+            player.setHealth(0);
+            // TODO: trigger scene change here
+        }
+    }
 }
