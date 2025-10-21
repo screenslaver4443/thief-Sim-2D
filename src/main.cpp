@@ -2,7 +2,7 @@
 // Created by Nikolai Pesudovs on 14/10/2025.
 //
 #include <SFML/Graphics.hpp>
-#include "game.h"
+#include "Game.h"
 #include <iostream>
 
 int main()

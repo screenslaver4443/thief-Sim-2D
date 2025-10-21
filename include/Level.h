@@ -4,21 +4,21 @@
 
 #include "Object.h"
 
-class Level {
- private:
-  // ImageFilepath background;
-  int width;
+class Level
+{
+private:
+    int width;
   int height;
   float gravity;
+  std::vector<Object> elements;
 
- public:
-  std::vector<Object> contents;
-
- public:
+public:
   Level(int width, int height, float gravity, std::vector<Object> contents);
-  ~Level();
-  void addObject(Object object);
-  float getGravity() { return this->gravity; }
+
+  void setWidth(int w);
+  void setHeight(int h);
+  int getWidth() const;
+  int getHeight() const;
 };
 
 #endif
