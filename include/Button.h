@@ -9,6 +9,7 @@ class Button: UI {
         bool enabled;
         std::string contents;
     public:
+        Button(bool, std::string);
         void clicked();
 };
 

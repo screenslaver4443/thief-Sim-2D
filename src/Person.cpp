@@ -3,7 +3,7 @@
 using namespace std;
 
 Person::Person() {
-    name="ABCD";
+    name="ABCDE";
     age=18;
     isAlive=true;
     money=0.00;

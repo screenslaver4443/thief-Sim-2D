@@ -9,9 +9,9 @@ class Loot: Item {
         double value;
     public:
         double getWeight();
-        void setWeight(double);
+        void setWeight(double weight);
         double getValue();
-        void setValue(double);
+        void setValue(double value);
 };
 
 #endif

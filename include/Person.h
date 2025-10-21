@@ -13,13 +13,13 @@ class Person: virtual public Object{
         int health;
     public:
         Person();
-        Person(std::string, int, bool, float, int);
+        Person(std::string name, int age, bool isAlive, float money, int health);
         std::string getName();
-        void setName(std::string);
+        void setName(std::string name);
         int getAge();
-        void setAge(int);
+        void setAge(int age);
         bool getIsAlive();
-        void setIsAlive(bool);
+        void setIsAlive(bool isAlive);
 };
 
 #endif

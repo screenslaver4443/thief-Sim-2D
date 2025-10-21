@@ -11,9 +11,9 @@ class Object {
         float sizeY;
     public:
         Object();
-        Object(bool, float, float, float, float);
-        void setPosX(float);
-        void setPosY(float);
+        Object(bool hasGravity, float posX, float poxY, float sizeX, float sizeY);
+        void setPosX(float posX);
+        void setPosY(float posY);
         float getSizeX();
         float getSizeY();
 };

@@ -8,8 +8,8 @@ class Level {
   int height;
 
  public:
-  void setWidth(int);
-  void setHeight(int);
+  void setWidth(int width);
+  void setHeight(int height);
 };
 
 #endif

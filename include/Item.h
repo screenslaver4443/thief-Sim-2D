@@ -13,9 +13,9 @@ class Item : virtual public Object, virtual public Level {
 
  public:
   std::string getType();
-  void setType(std::string);
+  void setType(std::string type);
   double getValue();
-  void setValue(double);
+  void setValue(double value);
 };
 
 #endif
