@@ -9,9 +9,9 @@ class PlayerThief: Criminal {
         int StolenGoods;
     public:
         void steal();
-        void setStoleGoods(int);
+        void setStoleGoods(int stolenGoods);
         void attack();
-        void takeDamage(int);
+        void takeDamage(int damage);
         void moveLeft();
         void moveRight();
         void jump();

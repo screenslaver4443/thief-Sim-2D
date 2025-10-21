@@ -3,12 +3,15 @@
 
 #include "UI.h"
 
+
+
 class HealthIndicator : UI {
  private:
   int health;
 
  public:
-  void setHealth(int);
+  HealthIndicator(int health);
+  void setHealth(int health);
   int getHealth();
 };
 
