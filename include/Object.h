@@ -15,6 +15,8 @@ public:
     Object(bool, float, float, float, float);
     void setPosX(float);
     void setPosY(float);
+    float getPosX();
+    float getPosY();
     float getSizeX();
     float getSizeY();
 

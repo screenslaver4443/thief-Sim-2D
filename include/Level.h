@@ -11,11 +11,10 @@ class Level
 private:
     int width;
     int height;
+    std::vector<Object> elements;
 
 public:
-    Level(int width, int height, float gravity, std::vector<Object> contents);
-    Level() = default;
-
+    Level(int width, int height, std::vector<Object> contents);
     void setWidth(int);
     void setHeight(int);
     int getWidth() const;

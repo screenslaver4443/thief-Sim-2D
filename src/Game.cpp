@@ -31,7 +31,10 @@ Game::Game(sf::RenderWindow &win)
     heart.setScale(0.05f, 0.05f);
     diamond.setScale(0.025f, 0.025f);
 
-    player.setPosition(100, 400);
+    // Initialize playerObj position and sync with sprite
+    playerObj.setPosX(100);
+    playerObj.setPosY(400);
+    player.setPosition(playerObj.getPosX(), playerObj.getPosY());
     button.setPosition(350, 350);
     heart.setPosition(20, 20);
     diamond.setPosition(600, 400);
@@ -126,7 +129,9 @@ void Game::processEvents()
                     state = GameState::LEVEL;
                     suspicion = 0;
                     heartsRemaining = 3;
-                    player.setPosition(100, 400);
+                    playerObj.setPosX(100);
+                    playerObj.setPosY(400);
+                    player.setPosition(playerObj.getPosX(), playerObj.getPosY());
                 }
             }
         }
@@ -147,13 +152,25 @@ void Game::update()
     {
         float speed = 3.5f;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            player.move(-speed, 0);
+        {
+            playerObj.setPosX(playerObj.getPosX() - speed);
+            player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            player.move(speed, 0);
+        {
+            playerObj.setPosX(playerObj.getPosX() + speed);
+            player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            player.move(0, -speed);
+        {
+            playerObj.setPosY(playerObj.getPosY() - speed);
+            player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            player.move(0, speed);
+        {
+            playerObj.setPosY(playerObj.getPosY() + speed);
+            player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+        }
 
         // sus
         suspicionTimer += clock.restart().asSeconds();
@@ -174,7 +191,9 @@ void Game::update()
                     std::cout << "ya got caught gang :(\n";
                     heartsRemaining = 3;
                     suspicion = 0;
-                    player.setPosition(100, 400);
+                    playerObj.setPosX(100);
+                    playerObj.setPosY(400);
+                    player.setPosition(playerObj.getPosX(), playerObj.getPosY());
                     state = GameState::MAIN_MENU;
                 }
             }
@@ -186,7 +205,9 @@ void Game::update()
             state = GameState::VICTORY;
             levelsBeaten++;
 
-            player.setPosition(100, 400);
+            playerObj.setPosX(100);
+            playerObj.setPosY(400);
+            player.setPosition(playerObj.getPosX(), playerObj.getPosY());
             diamond.setPosition(600, 400);
         }
     }

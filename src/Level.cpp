@@ -2,8 +2,8 @@
 
 #include "PlayerThief.h"
 
-Level::Level(int width, int height, float gravity, std::vector<Object> contents)
-    : width(width), height(height), gravity(gravity), elements(contents) // correct order
+Level::Level(int width, int height, std::vector<Object> contents)
+    : width(width), height(height), elements(contents)
 {
 }
 
