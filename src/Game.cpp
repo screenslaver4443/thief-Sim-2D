@@ -23,12 +23,17 @@ void Game::cleanup() {
 }
 
 void Game::init() {
-  scenes.insert({"test", new Level});
+  scenes.insert(
+      {"test", new Level(500, 500, 9.8f,
+                         std::vector<Object>{Object(true, 0, 0, 10, 10)})});
+  current_scene = scenes["test"];
   // more here
 }
 
 void Game::update(float deltaTime) {
-  // Implementation to be added
+  for (auto i : current_scene->contents) {
+    i.handleGravity(current_scene->getGravity());
+  }
 }
 
 void Game::render(float deltaTime) {}
