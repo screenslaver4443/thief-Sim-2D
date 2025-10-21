@@ -1,7 +1,7 @@
 //
 // Created by Nikolai Pesudovs on 14/10/2025.
 //
-#include "Game.h"
+#include "game.h"
 
 // constructor
 Game::Game(sf::RenderWindow &win)
@@ -49,9 +49,12 @@ Game::Game(sf::RenderWindow &win)
     menuButton.setScale(0.04f, 0.04f);
     menuButton.setPosition(300, 15);
 
-    // gang we cant do arial I dont have the file :(
-    if (!font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
-        std::cout << "Missing font file!\n";
+    // Load system font - try macOS fonts first, then Linux fallback
+    if (!font.loadFromFile("/System/Library/Fonts/Helvetica.ttc") &&
+        !font.loadFromFile("/System/Library/Fonts/HelveticaNeue.ttc") &&
+        !font.loadFromFile("/System/Library/Fonts/Menlo.ttc") &&
+        !font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
+        std::cout << "Missing font file! Tried Helvetica, Helvetica Neue, Menlo, and DejaVu Sans\n";
 
     menuText.setFont(font);
     menuText.setString("Menu");

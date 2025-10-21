@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/src",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/opt/homebrew/Cellar/sfml@2/2.6.2_1/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",
