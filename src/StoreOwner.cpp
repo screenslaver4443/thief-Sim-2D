@@ -1,22 +1,25 @@
 #include "StoreOwner.h"
 
-StoreOwner::StoreOwner(int suspicion, int level) {
-    this->suspicion=suspicion;
-    this->level=level;
+StoreOwner::StoreOwner(int x, int y)
+{
+    setPosition(x, y);
+    this->setHealth(100);
+    setupZone(150, 150);
 }
 
-int StoreOwner::getSuspicion() {
-    return suspicion;
+void StoreOwner::setupZone(float width, float height)
+{
+    detectionZone.setSize(sf::Vector2f(width, height));
+    detectionZone.setPosition(posX - width / 2, posY - height / 2);
+    detectionZone.setFillColor(sf::Color(255, 0, 0, 80));
 }
 
-void StoreOwner::setSuspicion(int) {
-    this->suspicion=suspicion;
+sf::RectangleShape StoreOwner::getZone() const
+{
+    return detectionZone;
 }
 
-int StoreOwner::getLevel() {
-    return level;
-}
-
-void StoreOwner::setLevel(int) {
-    this->level=level;
+bool StoreOwner::detectsPlayer(sf::FloatRect playerBounds)
+{
+    return detectionZone.getGlobalBounds().intersects(playerBounds);
 }

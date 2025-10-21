@@ -1,32 +1,24 @@
 #include "Person.h"
-#include <iostream>
-using namespace std;
-
-#include "Person.h"
 
 Person::Person()
-{
-    name = "Unnamed";
-    age = 0;
-    isAlive = true;
-    money = 0.0f;
-    health = 100;
-}
+    : name("Unnamed"), age(0), isAlive(true), money(0.0f), health(100) {}
 
-Person::Person(std::string n, int a, bool alive, float m, int h)
+void Person::setHealth(int h)
 {
-    name = n;
-    age = a;
-    isAlive = alive;
-    money = m;
     health = h;
+    if (health < 0)
+        health = 0;
+    if (health > 100)
+        health = 100;
 }
 
-std::string Person::getName() { return name; }
-void Person::setName(std::string n) { name = n; }
+int Person::getHealth() const { return health; }
 
-int Person::getAge() { return age; }
+void Person::setName(const std::string &n) { name = n; }
+std::string Person::getName() const { return name; }
+
 void Person::setAge(int a) { age = a; }
+int Person::getAge() const { return age; }
 
-bool Person::getIsAlive() { return isAlive; }
 void Person::setIsAlive(bool alive) { isAlive = alive; }
+bool Person::getIsAlive() const { return isAlive; }

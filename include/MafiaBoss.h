@@ -1,17 +1,17 @@
 #ifndef MAFIABOSS_H
 #define MAFIABOSS_H
 
-#include "Criminal.h"
+#include "Security.h"
 
-class MafiaBoss: Criminal {
-    private:
-        int power;
-        int satisfaction;
-    public:
-        int getPower();
-        void setPower(int power);
-        int getSatisfaction();
-        void setSatisfaction(int satisfaction);
+class MafiaBoss : public Person
+{
+private:
+    bool active;
+
+public:
+    MafiaBoss();
+    void update(Security &security);
+    void activate() { active = true; }
 };
 
 #endif

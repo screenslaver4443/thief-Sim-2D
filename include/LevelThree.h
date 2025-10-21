@@ -1,13 +1,29 @@
-#ifndef LEVELTHREE_H
-#define LEVELTHREE_H
+#ifndef LEVEL_THREE_H
+#define LEVEL_THREE_H
 
 #include "Level.h"
+#include "Employee.h"
+#include "Security.h"
+#include "MafiaBoss.h"
+#include "PlayerThief.h"
+#include <SFML/Graphics.hpp>
 
 class LevelThree : public Level
 {
+private:
+    Employee employee;
+    Security security;
+    MafiaBoss boss;
+    bool bossActivated;
+
+    sf::Texture employeeTexture, securityTexture, bossTexture;
+    sf::Sprite employeeSprite, securitySprite, bossSprite;
+
 public:
     LevelThree();
-    void setup() override;
+    void load() override;
+    void update(float deltaTime, PlayerThief &player);
+    void draw(sf::RenderWindow &window);
 };
 
 #endif

@@ -1,31 +1,28 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include <SFML/Graphics.hpp>
 #include <vector>
 #include "Object.h"
 
-// Base Level classss which we gonna use in LevelOne, LevelTwo, and LevelThree
+// Base Level class we will use in LevelOne, LevelTwo, and LevelThree
 class Level
 {
-private:
+protected:
     int width;
     int height;
-    std::vector<Object> elements;
+    std::vector<Object *> elements;
 
 public:
-    Level(int width, int height, std::vector<Object> contents);
-    void setWidth(int);
-    void setHeight(int);
+    Level();
+    Level(int w, int h);
+    ~Level() = default;
+    void setWidth(int w);
+    void setHeight(int h);
+
     int getWidth() const;
     int getHeight() const;
 
-    sf::Color backgroundColor;
-    sf::Vector2f diamondPosition;
-    float suspicionRate;
-
-    virtual void setup() = 0;
-    virtual ~Level() = default;
+    virtual void load();
 };
 
-#endif // LEVEL_H
+#endif

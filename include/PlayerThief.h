@@ -1,39 +1,22 @@
 #ifndef PLAYERTHIEF_H
 #define PLAYERTHIEF_H
+
+#include "Object.h"
 #include <SFML/Graphics.hpp>
 
-#include "Criminal.h"
-
-class PlayerThief : public Criminal
+class PlayerThief : public Object
 {
 private:
-    int Health;
-    int StolenGoods;
-
-    // gui
-    sf::RectangleShape shape;
+    int health;
 
 public:
-    void steal();
-    void setStoleGoods(int);
-    void attack();
-    void takeDamage(int);
-    void moveLeft();
-    void moveRight();
-    void jump();
+    PlayerThief();
+    void takeDamage(int amount);
+    void setHealth(int h);
+    int getHealth() const;
 
-    // Position methods that delegate to Object
-    void setPosX(float x) { Object::setPosX(x); }
-    void setPosY(float y) { Object::setPosY(y); }
-    float getPosX() { return Object::getPosX(); }
-    float getPosY() { return Object::getPosY(); }
-    // gui
-    PlayerThief()
-    {
-        shape.setSize(sf::Vector2f(50, 100));
-        shape.setFillColor(sf::Color::Cyan);
-        shape.setPosition(100, 400);
-    }
+    sf::FloatRect getBounds() const;
+    bool intersects(const Object &other) const;
 };
 
 #endif

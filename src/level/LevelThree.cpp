@@ -1,14 +1,58 @@
 #include "LevelThree.h"
-#include <SFML/Graphics.hpp>
+#include <iostream>
 
-LevelThree::LevelThree() : Level(900, 700, 0.0f, {}) {}
-
-void LevelThree::setup()
+LevelThree::LevelThree() : Level(800, 600), bossActivated(false)
 {
+    if (!employeeTexture.loadFromFile("sprites/employee.png"))
+        std::cout << "Failed to load employee.png\n";
+    if (!securityTexture.loadFromFile("sprites/security.png"))
+        std::cout << "Failed to load security.png\n";
+    if (!bossTexture.loadFromFile("sprites/boss.png"))
+        std::cout << "Failed to load boss.png\n";
 
-    backgroundColor = sf::Color(255, 230, 230);
+    employeeSprite.setTexture(employeeTexture);
+    securitySprite.setTexture(securityTexture);
+    bossSprite.setTexture(bossTexture);
 
-    diamondPosition = {750.f, 200.f};
+    employeeSprite.setScale(1.5f, 1.5f);
+    securitySprite.setScale(1.5f, 1.5f);
+    bossSprite.setScale(1.5f, 1.5f);
+}
 
-    suspicionRate = 2.0f;
+void LevelThree::load()
+{
+    std::cout << "Level 3 loaded — Employee, Security, Boss active\n";
+
+    employee.setPosX(300);
+    employee.setPosY(400);
+    security.setPosX(500);
+    security.setPosY(400);
+    boss.setPosX(700);
+    boss.setPosY(400);
+
+    employeeSprite.setPosition(300, 400);
+    securitySprite.setPosition(500, 400);
+    bossSprite.setPosition(700, 400);
+}
+
+void LevelThree::update(float deltaTime, PlayerThief &player)
+{
+    employee.update(deltaTime, player);
+    security.chase(player);
+
+    if (!bossActivated && boss.intersects(player))
+    {
+        bossActivated = true;
+        std::cout << "Boss activated — moving toward security!\n";
+    }
+
+    if (bossActivated)
+        boss.update(security);
+}
+
+void LevelThree::draw(sf::RenderWindow &window)
+{
+    window.draw(employeeSprite);
+    window.draw(securitySprite);
+    window.draw(bossSprite);
 }
