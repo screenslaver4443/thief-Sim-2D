@@ -47,7 +47,8 @@ Game::Game(sf::RenderWindow &win)
     // back to menu thingy
     menuButton.setTexture(buttonTex);
     menuButton.setScale(0.04f, 0.04f);
-    menuButton.setPosition(300, 15);
+    int menuButtonX = 700, menuButtonY = 15;
+    menuButton.setPosition(menuButtonX, menuButtonY);
 
     // Load system font - try macOS fonts first, then Linux fallback
     if (!font.loadFromFile("/System/Library/Fonts/Helvetica.ttc") &&
@@ -60,7 +61,7 @@ Game::Game(sf::RenderWindow &win)
     menuText.setString("Menu");
     menuText.setCharacterSize(20);
     menuText.setFillColor(sf::Color::Black);
-    menuText.setPosition(210, 20);
+    menuText.setPosition(menuButtonX + 50, menuButtonY + 15);
 
     // tracks levels beaten in a session :3
     diamondIcon.setTexture(diamondTex);
