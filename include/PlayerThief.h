@@ -4,7 +4,7 @@
 
 #include "Criminal.h"
 
-class PlayerThief : Criminal
+class PlayerThief : public Criminal
 {
 private:
     int Health;
@@ -21,6 +21,12 @@ public:
     void moveLeft();
     void moveRight();
     void jump();
+
+    // Position methods that delegate to Object
+    void setPosX(float x) { Object::setPosX(x); }
+    void setPosY(float y) { Object::setPosY(y); }
+    float getPosX() { return Object::getPosX(); }
+    float getPosY() { return Object::getPosY(); }
     // gui
     PlayerThief()
     {
