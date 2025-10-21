@@ -8,6 +8,7 @@ class StoreOwner: Employee {
         int suspicion;
         int level;
     public:
+        StoreOwner(int, int);
         int getSuspicion();
         void setSuspicion(int);
         int getLevel();

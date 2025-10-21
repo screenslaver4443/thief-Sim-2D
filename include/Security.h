@@ -8,10 +8,11 @@ class Security: Employee {
         int suspicion;
         int level;
     public:
+        Security(int suspicion, int level);
         int getSuspicion();
-        void setSuspicion(int);
+        void setSuspicion(int suspicion);
         int getLevel();
-        void setLevel(int);
+        void setLevel(int level);
 };
 
 #endif

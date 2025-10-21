@@ -7,6 +7,8 @@ class Employee: Person {
     protected:
         int ID;
     public:
+        Employee();
+        Employee(int ID);
         int getID();
 };
 

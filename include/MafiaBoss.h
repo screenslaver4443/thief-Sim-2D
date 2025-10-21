@@ -9,9 +9,9 @@ class MafiaBoss: Criminal {
         int satisfaction;
     public:
         int getPower();
-        void setPower(int);
+        void setPower(int power);
         int getSatisfaction();
-        void setSatisfaction();
+        void setSatisfaction(int satisfaction);
 };
 
 #endif
