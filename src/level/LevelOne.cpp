@@ -11,3 +11,16 @@ void LevelOne::load()
 {
     std::cout << "Loading Level 1 assets and entities...\n";
 }
+
+void LevelOne::update(float deltaTime, PlayerThief &player)
+{
+    // Base level currently does not have interactive entities.
+    (void)deltaTime;
+    (void)player;
+}
+
+void LevelOne::draw(sf::RenderWindow &window)
+{
+    // Nothing to draw specifically for LevelOne; Game renders shared UI and player
+    (void)window;
+}

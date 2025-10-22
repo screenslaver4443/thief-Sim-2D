@@ -42,11 +42,7 @@ void LevelTwo::load()
 void LevelTwo::update(float deltaTime, PlayerThief &player)
 {
     // Ally heals player when touched
-    if (ally.intersects(player))
-    {
-        player.setHealth(100);
-        std::cout << "Healed to full health!\n";
-    }
+    ally.healPlayer(player);
 
     // Employee increases suspicion
     employee.update(deltaTime, player);

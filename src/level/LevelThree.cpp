@@ -40,9 +40,10 @@ void LevelThree::update(float deltaTime, PlayerThief &player)
     employee.update(deltaTime, player);
     security.chase(player);
 
-    if (!bossActivated && boss.intersects(player))
+    if (!bossActivated && player.intersects(boss))
     {
         bossActivated = true;
+        boss.activate();
         std::cout << "Boss activated — moving toward security!\n";
     }
 

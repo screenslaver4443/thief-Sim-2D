@@ -96,6 +96,12 @@ Game::Game(sf::RenderWindow &win)
             buttonBounds.left + (buttonBounds.width - textBounds.width) / 2.f,
             buttonBounds.top + (buttonBounds.height - textBounds.height) / 2.f - 8.f);
     }
+
+    // Initialize levels and set default active level to levelOne (first level)
+    levelOne.load();
+    levelTwo.load();
+    levelThree.load();
+    activeLevel = &levelOne; // default already created
 }
 
 // sorry I had return a layer deeper bf my bad
@@ -132,6 +138,13 @@ void Game::processEvents()
                     playerObj.setPosX(100);
                     playerObj.setPosY(400);
                     player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+                    // set the active level based on selection
+                    if (i == 0)
+                        activeLevel = &levelOne;
+                    else if (i == 1)
+                        activeLevel = &levelTwo;
+                    else if (i == 2)
+                        activeLevel = &levelThree;
                 }
             }
         }
@@ -210,6 +223,9 @@ void Game::update()
             player.setPosition(playerObj.getPosX(), playerObj.getPosY());
             diamond.setPosition(600, 400);
         }
+        // Forward update to active level (if any)
+        if (activeLevel)
+            activeLevel->update(clock.getElapsedTime().asSeconds(), playerObj);
     }
 }
 
@@ -241,6 +257,9 @@ void Game::render()
         window.draw(menuText);
         window.draw(player);
         window.draw(diamond);
+        // Draw active level-specific sprites/entities
+        if (activeLevel)
+            activeLevel->draw(window);
     }
     else if (state == GameState::VICTORY)
     {

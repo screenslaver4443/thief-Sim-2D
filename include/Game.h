@@ -12,9 +12,6 @@
 #include <SFML/Graphics.hpp>
 #include "PlayerThief.h"
 #include <iostream>
-#include "LevelOne.h"
-#include "LevelTwo.h"
-#include "LevelThree.h"
 
 enum class GameState
 {
@@ -58,12 +55,6 @@ private:
     // levelzzzzz
     sf::Sprite levelButtons[3];
     sf::Text levelText[3];
-
-    // Level instances
-    LevelOne levelOne;
-    LevelTwo levelTwo;
-    LevelThree levelThree;
-    Level *activeLevel = nullptr;
 
 public:
     Game(sf::RenderWindow &win);

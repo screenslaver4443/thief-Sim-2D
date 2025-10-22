@@ -10,7 +10,7 @@ private:
     sf::RectangleShape detectionZone;
 
 public:
-    StoreOwner(int x, int y);
+    StoreOwner(int x = 0, int y = 0);
     void setupZone(float width, float height);
     sf::RectangleShape getZone() const;
     bool detectsPlayer(sf::FloatRect playerBounds);
