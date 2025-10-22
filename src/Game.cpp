@@ -340,10 +340,10 @@ void Game::render()
 {
     // preeety backgrounf
     if (state == GameState::VICTORY)
-        window.clear(sf::Color(255, 255, 150));
+        window.clear(sf::Color(265, 265, 160));
     // yellow i think
     else
-        window.clear(sf::Color(245, 245, 245));
+        window.clear(sf::Color(235, 235, 235));
     // white
 
     if (state == GameState::MAIN_MENU)
@@ -375,7 +375,7 @@ void Game::render()
         if (activeLevel)
             activeLevel->draw(window);
 
-           if (debugEnabled)
+        if (debugEnabled)
         {
             sf::Text dbg(playerObj.toString(), font, 14);
             dbg.setFillColor(sf::Color::Red);

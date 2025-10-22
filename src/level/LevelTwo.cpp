@@ -37,16 +37,16 @@ void LevelTwo::load()
 {
     std::cout << "Level 2 loaded — Ally, Employee, Owner active\n";
 
-    ally.setPosX(200);
-    ally.setPosY(400);
-    employee.setPosX(760);
-    employee.setPosY(200);
-    owner.setPosX(500);
-    owner.setPosY(400);
+    ally.setPosX(210);
+    ally.setPosY(420);
+    employee.setPosX(720);
+    employee.setPosY(220);
+    owner.setPosX(530);
+    owner.setPosY(410);
 
     owner.setupZone(120, 120);
     owner.setZoneCenter(owner.getPosX(), owner.getPosY());
-    allySprite.setPosition(200, 400);
+    allySprite.setPosition(210, 420);
     // employee moved to top area, when he was in way it was confudign :3
     employeeSprite.setPosition(employee.getPosX(), employee.getPosY());
     ownerSprite.setPosition(owner.getPosX(), owner.getPosY());

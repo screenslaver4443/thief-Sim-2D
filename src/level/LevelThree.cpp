@@ -39,16 +39,16 @@ void LevelThree::load()
 {
     std::cout << "Level 3 loaded — Employee, Security, Boss active\n";
 
-    employee.setPosX(300);
-    employee.setPosY(400);
-    security.setPosX(500);
-    security.setPosY(400);
-    boss.setPosX(700);
-    boss.setPosY(400);
+    employee.setPosX(310);
+    employee.setPosY(410);
+    security.setPosX(520);
+    security.setPosY(430);
+    boss.setPosX(710);
+    boss.setPosY(420);
 
-    employeeSprite.setPosition(300, 400);
-    securitySprite.setPosition(500, 400);
-    // place boss at top-middle of the screen
+    employeeSprite.setPosition(310, 410);
+    securitySprite.setPosition(510, 410);
+
     boss.setPosX(400);
     boss.setPosY(50);
     bossSprite.setPosition(boss.getPosX(), boss.getPosY());
