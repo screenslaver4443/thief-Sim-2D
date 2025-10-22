@@ -19,6 +19,7 @@ void AllyThief::healPlayer(PlayerThief &player)
     if (player.intersects(*this))
     {
         player.setHealth(MAX_HEALTH);
+        player.setJustHealed(true);
         std::cout << "Ally Thief healed the player to full health!\n";
     }
 }

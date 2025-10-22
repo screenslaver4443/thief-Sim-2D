@@ -8,6 +8,8 @@ class PlayerThief : public Object
 {
 private:
     int health;
+    bool justHealed = false;
+    float speed = 200.0f; // default player movement speed (px/sec)
 
 public:
     PlayerThief();
@@ -17,6 +19,10 @@ public:
 
     sf::FloatRect getBounds() const;
     bool intersects(const Object &other) const;
+    void setJustHealed(bool v);
+    bool getJustHealed() const;
+    void setSpeed(float s);
+    float getSpeed() const;
 };
 
 #endif

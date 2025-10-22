@@ -10,7 +10,8 @@ StoreOwner::StoreOwner(int x, int y)
 void StoreOwner::setupZone(float width, float height)
 {
     detectionZone.setSize(sf::Vector2f(width, height));
-    detectionZone.setPosition(posX - width / 2, posY - height / 2);
+    // set the origin to the center to make positioning easier
+    detectionZone.setOrigin(width / 2, height / 2);
     detectionZone.setFillColor(sf::Color(255, 0, 0, 80));
 }
 
@@ -22,4 +23,9 @@ sf::RectangleShape StoreOwner::getZone() const
 bool StoreOwner::detectsPlayer(sf::FloatRect playerBounds)
 {
     return detectionZone.getGlobalBounds().intersects(playerBounds);
+}
+
+void StoreOwner::setZoneCenter(float centerX, float centerY)
+{
+    detectionZone.setPosition(centerX, centerY);
 }

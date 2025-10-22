@@ -7,7 +7,7 @@ class Security : public Employee
 {
 public:
     Security();
-    void chase(PlayerThief &player);
+    void chase(PlayerThief &player, float deltaTime);
 };
 
 #endif

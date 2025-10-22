@@ -8,7 +8,7 @@ Security::Security()
     this->setHealth(100);
 }
 
-void Security::chase(PlayerThief &player)
+void Security::chase(PlayerThief &player, float deltaTime)
 {
     sf::Vector2f playerPos = player.getPosition();
     sf::Vector2f myPos = getPosition();
@@ -17,14 +17,25 @@ void Security::chase(PlayerThief &player)
     float dy = playerPos.y - myPos.y;
     float dist = std::sqrt(dx * dx + dy * dy);
 
-    if (dist < 150)
+    // chase only when within a range
+    if (dist < 300)
     {
         std::cout << "Security chasing player!\n";
+        // move at half player speed in px/sec; player speed ~200 so security ~100
+        float speed = 100.0f;
+        if (dist > 1.0f)
+        {
+            float nx = dx / dist;
+            float ny = dy / dist;
+            setPosX(myPos.x + nx * speed * deltaTime);
+            setPosY(myPos.y + ny * speed * deltaTime);
+        }
+
         if (player.intersects(*this))
         {
             std::cout << "Player caught! Game Over!\n";
             player.setHealth(0);
-            // TODO: trigger scene change here
+            // actual scene change handled in Game::update
         }
     }
 }

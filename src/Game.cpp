@@ -35,6 +35,9 @@ Game::Game(sf::RenderWindow &win)
     playerObj.setPosX(100);
     playerObj.setPosY(400);
     player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+
+    // set player's object size to match the sprite (scaled)
+    playerObj.setSize(playerTex.getSize().x * 0.05f, playerTex.getSize().y * 0.05f);
     button.setPosition(350, 350);
     heart.setPosition(20, 20);
     diamond.setPosition(600, 400);
@@ -145,6 +148,15 @@ void Game::processEvents()
                         activeLevel = &levelTwo;
                     else if (i == 2)
                         activeLevel = &levelThree;
+
+                    // Reset and reload the chosen level so entities and timers start fresh
+                    if (activeLevel)
+                    {
+                        activeLevel->load();
+                        suspicionTimer = 0.f;
+                        // reset player speed to default on level start
+                        playerObj.setSpeed(200.0f);
+                    }
                 }
             }
         }
@@ -153,61 +165,76 @@ void Game::processEvents()
         {
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             if (menuButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+            {
                 state = GameState::MAIN_MENU;
+                // reset active level so it starts fresh next time
+                if (activeLevel)
+                {
+                    activeLevel->load();
+                    suspicionTimer = 0.f;
+                }
+            }
         }
     }
 }
 
 void Game::update()
 {
+    // frame delta
+    float deltaTime = clock.restart().asSeconds();
+
     // movement controls for da playuh
     if (state == GameState::LEVEL)
     {
-        float speed = 3.5f;
+        // Use deltaTime-based speeds (units per second) from player object
+        float speed = playerObj.getSpeed();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
-            playerObj.setPosX(playerObj.getPosX() - speed);
+            playerObj.setPosX(playerObj.getPosX() - speed * deltaTime);
             player.setPosition(playerObj.getPosX(), playerObj.getPosY());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
-            playerObj.setPosX(playerObj.getPosX() + speed);
+            playerObj.setPosX(playerObj.getPosX() + speed * deltaTime);
             player.setPosition(playerObj.getPosX(), playerObj.getPosY());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         {
-            playerObj.setPosY(playerObj.getPosY() - speed);
+            playerObj.setPosY(playerObj.getPosY() - speed * deltaTime);
             player.setPosition(playerObj.getPosX(), playerObj.getPosY());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
-            playerObj.setPosY(playerObj.getPosY() + speed);
+            playerObj.setPosY(playerObj.getPosY() + speed * deltaTime);
             player.setPosition(playerObj.getPosX(), playerObj.getPosY());
         }
 
-        // sus
-        suspicionTimer += clock.restart().asSeconds();
-        if (suspicionTimer > 1.0f)
+        // Global suspicion only accrues when current level has an Employee
+        if (activeLevel && activeLevel->hasEmployee())
         {
-            suspicion++;
-            suspicionTimer = 0.f;
-            std::cout << "Suspicion: " << suspicion << "\n";
-
-            if (suspicion >= 10)
+            suspicionTimer += deltaTime;
+            if (suspicionTimer > 1.0f)
             {
-                suspicion = 0;
-                heartsRemaining--;
-                std::cout << "Heart lost, " << heartsRemaining << " left \n";
+                suspicion++;
+                suspicionTimer = 0.f;
+                std::cout << "Suspicion: " << suspicion << "\n";
 
-                if (heartsRemaining <= 0)
+                if (suspicion >= 10)
                 {
-                    std::cout << "ya got caught gang :(\n";
-                    heartsRemaining = 3;
                     suspicion = 0;
-                    playerObj.setPosX(100);
-                    playerObj.setPosY(400);
-                    player.setPosition(playerObj.getPosX(), playerObj.getPosY());
-                    state = GameState::MAIN_MENU;
+                    heartsRemaining--;
+                    std::cout << "Heart lost, " << heartsRemaining << " left \n";
+
+                    if (heartsRemaining <= 0)
+                    {
+                        std::cout << "ya got caught gang :(\n";
+                        heartsRemaining = 3;
+                        suspicion = 0;
+                        playerObj.setPosX(100);
+                        playerObj.setPosY(400);
+                        player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+                        state = GameState::MAIN_MENU;
+                    }
                 }
             }
         }
@@ -225,7 +252,34 @@ void Game::update()
         }
         // Forward update to active level (if any)
         if (activeLevel)
-            activeLevel->update(clock.getElapsedTime().asSeconds(), playerObj);
+            activeLevel->update(deltaTime, playerObj);
+
+        // If player died (health <= 0) return to main menu
+        if (playerObj.getHealth() <= 0)
+        {
+            std::cout << "Player died — returning to menu\n";
+            state = GameState::MAIN_MENU;
+            playerObj.setHealth(100);
+            playerObj.setPosX(100);
+            playerObj.setPosY(400);
+            player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+            // Reload the active level so NPC positions and timers reset
+            if (activeLevel)
+            {
+                activeLevel->load();
+            }
+            suspicionTimer = 0.f;
+            // reset player speed to default
+            playerObj.setSpeed(200.0f);
+        }
+
+        // If player was just healed by ally, restore some UI or hearts
+        if (playerObj.getJustHealed())
+        {
+            // restore hearts UI to max (this is a simple behavior)
+            heartsRemaining = 3;
+            playerObj.setJustHealed(false);
+        }
     }
 }
 

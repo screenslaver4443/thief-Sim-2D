@@ -14,9 +14,24 @@ LevelThree::LevelThree() : Level(800, 600), bossActivated(false)
     securitySprite.setTexture(securityTexture);
     bossSprite.setTexture(bossTexture);
 
-    employeeSprite.setScale(1.5f, 1.5f);
-    securitySprite.setScale(1.5f, 1.5f);
-    bossSprite.setScale(1.5f, 1.5f);
+    // Match player size
+    const float npcScale = 0.05f;
+    employeeSprite.setScale(npcScale, npcScale);
+    securitySprite.setScale(npcScale, npcScale);
+    bossSprite.setScale(npcScale, npcScale);
+
+    // center sprite origins
+    sf::FloatRect eBounds = employeeSprite.getLocalBounds();
+    employeeSprite.setOrigin(eBounds.width / 2.f, eBounds.height / 2.f);
+    sf::FloatRect sBounds = securitySprite.getLocalBounds();
+    securitySprite.setOrigin(sBounds.width / 2.f, sBounds.height / 2.f);
+    sf::FloatRect bBounds = bossSprite.getLocalBounds();
+    bossSprite.setOrigin(bBounds.width / 2.f, bBounds.height / 2.f);
+
+    // set object sizes to match sprite visuals (scaled)
+    employee.setSize(employeeTexture.getSize().x * npcScale, employeeTexture.getSize().y * npcScale);
+    security.setSize(securityTexture.getSize().x * npcScale, securityTexture.getSize().y * npcScale);
+    boss.setSize(bossTexture.getSize().x * npcScale, bossTexture.getSize().y * npcScale);
 }
 
 void LevelThree::load()
@@ -32,23 +47,45 @@ void LevelThree::load()
 
     employeeSprite.setPosition(300, 400);
     securitySprite.setPosition(500, 400);
-    bossSprite.setPosition(700, 400);
+    // place boss at top-middle of the screen
+    boss.setPosX(400);
+    boss.setPosY(50);
+    bossSprite.setPosition(boss.getPosX(), boss.getPosY());
+
+    // Ensure boss is initially inactive
+    bossActivated = false;
+
+    // revive entities in case of replays
+    employee.setIsAlive(true);
+    employee.setHealth(100);
+    employee.resetSuspicion();
+    security.setIsAlive(true);
+    security.setHealth(100);
+    boss.setIsAlive(true);
+    boss.setHealth(100);
 }
 
 void LevelThree::update(float deltaTime, PlayerThief &player)
 {
     employee.update(deltaTime, player);
-    security.chase(player);
+    security.chase(player, deltaTime);
 
-    if (!bossActivated && player.intersects(boss))
+    // Boss no longer targets security; boss remains idle at top-middle.
+    // If we ever want a more complex behavior, implement it here.
+
+    // Boss touch: if player touches boss, double player's speed and remove boss
+    if (boss.getIsAlive() && player.intersects(boss))
     {
-        bossActivated = true;
-        boss.activate();
-        std::cout << "Boss activated — moving toward security!\n";
+        std::cout << "Player touched boss: speed doubled!\n";
+        player.setSpeed(player.getSpeed() * 2.0f);
+        boss.setIsAlive(false);
+        boss.setHealth(0);
     }
 
-    if (bossActivated)
-        boss.update(security);
+    // Sync sprites with entity positions (always sync to avoid visual lag)
+    employeeSprite.setPosition(employee.getPosX(), employee.getPosY());
+    securitySprite.setPosition(security.getPosX(), security.getPosY());
+    bossSprite.setPosition(boss.getPosX(), boss.getPosY());
 }
 
 void LevelThree::draw(sf::RenderWindow &window)

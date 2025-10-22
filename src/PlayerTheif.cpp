@@ -35,3 +35,11 @@ bool PlayerThief::intersects(const Object &other) const
     sf::FloatRect otherBounds(otherPos.x, otherPos.y, otherSize.x, otherSize.y);
     return getBounds().intersects(otherBounds);
 }
+
+void PlayerThief::setJustHealed(bool v) { justHealed = v; }
+
+bool PlayerThief::getJustHealed() const { return justHealed; }
+
+void PlayerThief::setSpeed(float s) { speed = s; }
+
+float PlayerThief::getSpeed() const { return speed; }

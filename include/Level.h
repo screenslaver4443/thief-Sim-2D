@@ -29,6 +29,8 @@ public:
     // that don't override them will continue to work.
     virtual void update(float deltaTime, PlayerThief &player) {}
     virtual void draw(sf::RenderWindow &window) {}
+    // Does this level contain an Employee (affects global suspicion)?
+    virtual bool hasEmployee() const { return false; }
 };
 
 #endif

@@ -12,6 +12,7 @@ private:
 public:
     StoreOwner(int x = 0, int y = 0);
     void setupZone(float width, float height);
+    void setZoneCenter(float centerX, float centerY);
     sf::RectangleShape getZone() const;
     bool detectsPlayer(sf::FloatRect playerBounds);
 };

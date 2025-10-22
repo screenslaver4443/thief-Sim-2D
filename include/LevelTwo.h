@@ -23,6 +23,7 @@ public:
     void load() override;
     void update(float deltaTime, PlayerThief &player);
     void draw(sf::RenderWindow &window);
+    bool hasEmployee() const override { return true; }
 };
 
 #endif

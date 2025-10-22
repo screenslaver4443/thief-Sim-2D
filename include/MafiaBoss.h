@@ -10,7 +10,7 @@ private:
 
 public:
     MafiaBoss();
-    void update(Security &security);
+    void update(Security &security, PlayerThief &player, float deltaTime);
     void activate() { active = true; }
 };
 
