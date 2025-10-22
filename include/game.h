@@ -15,6 +15,7 @@
 #include "LevelOne.h"
 #include "LevelTwo.h"
 #include "LevelThree.h"
+#include "SaveManager.h"
 
 enum class GameState
 {
@@ -58,12 +59,19 @@ private:
     // levelzzzzz
     sf::Sprite levelButtons[3];
     sf::Text levelText[3];
+    // Save/Load UI
+    sf::Sprite saveButton;
+    sf::Sprite resetButton;
+    sf::Text saveText;
+    sf::Text resetText;
 
     // Level instances
     LevelOne levelOne;
     LevelTwo levelTwo;
     LevelThree levelThree;
     Level *activeLevel = nullptr;
+    bool debugEnabled = false;
+    SaveManager saveManager;
 
 public:
     Game(sf::RenderWindow &win);

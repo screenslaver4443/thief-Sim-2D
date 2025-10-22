@@ -2,8 +2,9 @@
 #define MAFIABOSS_H
 
 #include "Security.h"
+#include "Criminal.h"
 
-class MafiaBoss : public Person
+class MafiaBoss : public Criminal
 {
 private:
     bool active;

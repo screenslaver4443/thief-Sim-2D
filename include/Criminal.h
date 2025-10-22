@@ -1,3 +1,4 @@
+// parent class to thr bad guys
 #ifndef CRIMINAL_H
 #define CRIMINAL_H
 
@@ -10,6 +11,8 @@ protected:
     int strength;
 
 public:
+    Criminal();
+    virtual ~Criminal() = default;
     int getStrength();
     void setStrength(int);
     int getSkill();

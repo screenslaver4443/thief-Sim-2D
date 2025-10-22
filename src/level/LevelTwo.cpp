@@ -62,6 +62,8 @@ void LevelTwo::load()
     // revive entities (in case level is replayed)
     ally.setIsAlive(true);
     ally.setHealth(100);
+    // give ally a skill so its heal and buff scale
+    ally.setSkill(2);
     employee.setIsAlive(true);
     employee.setHealth(100);
     // reset employee suspicion timer/counter
@@ -78,6 +80,8 @@ void LevelTwo::update(float deltaTime, PlayerThief &player)
         sf::FloatRect allyRect = allySprite.getGlobalBounds();
         if (allyRect.intersects(player.getBounds()))
             ally.healPlayer(player);
+        // tick down any heal cooldown
+        ally.updateCooldown(deltaTime);
     }
 
     // Employee increases suspicion

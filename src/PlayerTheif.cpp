@@ -1,4 +1,6 @@
 #include "PlayerThief.h"
+#include <fstream>
+#include <sstream>
 
 PlayerThief::PlayerThief() : health(100) {}
 
@@ -43,3 +45,69 @@ bool PlayerThief::getJustHealed() const { return justHealed; }
 void PlayerThief::setSpeed(float s) { speed = s; }
 
 float PlayerThief::getSpeed() const { return speed; }
+
+void PlayerThief::applySpeedBuff(float multiplier, float durationSeconds)
+{
+    if (!speedBuffActive)
+    {
+        speed *= multiplier;
+        speedBuffActive = true;
+        speedBuffTimer = durationSeconds;
+        speedBuffDuration = durationSeconds;
+    }
+}
+
+void PlayerThief::updateBuff(float deltaTime)
+{
+    if (speedBuffActive)
+    {
+        speedBuffTimer -= deltaTime;
+        if (speedBuffTimer <= 0.f)
+        {
+            // revert speed to default (assume default is 200.0f)
+            speed = 200.0f;
+            speedBuffActive = false;
+            speedBuffTimer = 0.f;
+        }
+    }
+}
+
+bool PlayerThief::saveToFile(const std::string &path) const
+{
+    std::ofstream ofs(path);
+    if (!ofs.is_open())
+        return false;
+    // simple whitespace-separated format: posX posY health speed
+    ofs << posX << " " << posY << " " << health << " " << speed << "\n";
+    ofs.close();
+    return true;
+}
+
+bool PlayerThief::loadFromFile(const std::string &path)
+{
+    std::ifstream ifs(path);
+    if (!ifs.is_open())
+        return false;
+    float px, py;
+    int h;
+    float s;
+    ifs >> px >> py >> h >> s;
+    if (ifs.fail())
+    {
+        ifs.close();
+        return false;
+    }
+    posX = px;
+    posY = py;
+    health = h;
+    speed = s;
+    ifs.close();
+    return true;
+}
+
+std::string PlayerThief::toString() const
+{
+    std::ostringstream ss;
+    ss << "Player(pos=" << posX << "," << posY << ", health=" << health << ", speed=" << speed << ")";
+    return ss.str();
+}

@@ -63,6 +63,8 @@ void LevelThree::load()
     security.setHealth(100);
     boss.setIsAlive(true);
     boss.setHealth(100);
+    // give boss a skill level (affects the temporary buff strength/duration)
+    boss.setSkill(2);
 }
 
 void LevelThree::update(float deltaTime, PlayerThief &player)
@@ -73,11 +75,14 @@ void LevelThree::update(float deltaTime, PlayerThief &player)
     // Boss no longer targets security; boss remains idle at top-middle.
     // If we ever want a more complex behavior, implement it here.
 
-    // Boss touch: if player touches boss, double player's speed and remove boss
+    // Boss touch: if player touches boss, apply a temporary speed buff based on boss skill
     if (boss.getIsAlive() && player.intersects(boss))
     {
-        std::cout << "Player touched boss: speed doubled!\n";
-        player.setSpeed(player.getSpeed() * 2.0f);
+        int skill = boss.getSkill();
+        float multiplier = 1.0f + 0.5f * static_cast<float>(skill); // e.g. skill=2 -> 2.0x
+        float duration = 5.0f * static_cast<float>(skill);          // longer with higher skill
+        std::cout << "Player touched boss: applying speed buff x" << multiplier << " for " << duration << "s\n";
+        player.applySpeedBuff(multiplier, duration);
         boss.setIsAlive(false);
         boss.setHealth(0);
     }

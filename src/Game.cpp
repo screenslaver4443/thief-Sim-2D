@@ -2,6 +2,7 @@
 // Created by Nikolai Pesudovs on 14/10/2025.
 //
 #include "game.h"
+#include "GameStateSaver.h"
 
 // constructor
 Game::Game(sf::RenderWindow &win)
@@ -80,6 +81,37 @@ Game::Game(sf::RenderWindow &win)
     diamondCount.setPosition(550, 140);
     diamondCount.setString("x 0");
 
+    // Save/Load buttons
+    saveButton.setTexture(buttonTex);
+    saveButton.setScale(0.05f, 0.05f);
+    saveButton.setPosition(20, 500);
+    // no separate load button (autosave loaded at startup)
+    resetButton.setTexture(buttonTex);
+    resetButton.setScale(0.05f, 0.05f);
+    resetButton.setPosition(300, 500);
+
+    saveText.setFont(font);
+    saveText.setString("Save");
+    saveText.setCharacterSize(18);
+    saveText.setFillColor(sf::Color::Black);
+    saveText.setPosition(30, 525);
+
+    resetText.setFont(font);
+    resetText.setString("Reset");
+    resetText.setCharacterSize(18);
+    resetText.setFillColor(sf::Color::Black);
+    resetText.setPosition(310, 525);
+
+    // register GameStateSaver to persist diamond/levelsBeaten
+    static GameStateSaver gsSaver;
+    gsSaver.setTarget(&levelsBeaten);
+    saveManager.registerSavable(&gsSaver);
+
+    // Do NOT register playerObj anymore — we only persist diamonds
+    // On startup, attempt to load saved gamestate automatically
+    if (saveManager.loadAll("."))
+        std::cout << "Loaded saved game state (auto)\n";
+
     // levelzzzzz
     for (int i = 0; i < 3; ++i)
     {
@@ -105,6 +137,9 @@ Game::Game(sf::RenderWindow &win)
     levelTwo.load();
     levelThree.load();
     activeLevel = &levelOne; // default already created
+
+    // Register savable objects
+    saveManager.registerSavable(&playerObj);
 }
 
 // sorry I had return a layer deeper bf my bad
@@ -126,10 +161,48 @@ void Game::processEvents()
         if (event.type == sf::Event::Closed)
             window.close();
 
+        // keyboard shortcuts handled here
+        if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::S)
+            {
+                bool ok = saveManager.saveAll(".");
+                std::cout << (ok ? "Saved all savable objects\n" : "Failed to save all\n");
+            }
+            else if (event.key.code == sf::Keyboard::L)
+            {
+                bool ok = saveManager.loadAll(".");
+                std::cout << (ok ? "Loaded all savable objects\n" : "Failed to load all\n");
+                // sync sprite after loading
+                player.setPosition(playerObj.getPosX(), playerObj.getPosY());
+            }
+            else if (event.key.code == sf::Keyboard::D)
+            {
+                debugEnabled = !debugEnabled;
+                std::cout << "Debug overlay " << (debugEnabled ? "enabled\n" : "disabled\n");
+            }
+        }
+
         // please work oh god im gonna cry please work
         if (state == GameState::MAIN_MENU && event.type == sf::Event::MouseButtonPressed)
         {
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            // check save/load buttons first
+            if (saveButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+            {
+                bool ok = saveManager.saveAll(".");
+                std::cout << (ok ? "Saved all savable objects\n" : "Failed to save all\n");
+                continue;
+            }
+            // no load button here (autosave loaded at startup)
+            if (resetButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+            {
+                levelsBeaten = 0;
+                std::cout << "Diamonds reset to 0\n";
+                // save new gamestate immediately
+                saveManager.saveAll(".");
+                continue;
+            }
             for (int i = 0; i < 3; ++i)
             {
                 if (levelButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
@@ -164,6 +237,7 @@ void Game::processEvents()
         if (state == GameState::LEVEL && event.type == sf::Event::MouseButtonPressed)
         {
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            // in-level clicks (menu positioned in-level)
             if (menuButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
             {
                 state = GameState::MAIN_MENU;
@@ -245,6 +319,10 @@ void Game::update()
             state = GameState::VICTORY;
             levelsBeaten++;
 
+            // autosave diamonds when obtained
+            if (!saveManager.saveAll("."))
+                std::cout << "Warning: failed to autosave gamestate\n";
+
             playerObj.setPosX(100);
             playerObj.setPosY(400);
             player.setPosition(playerObj.getPosX(), playerObj.getPosY());
@@ -253,6 +331,9 @@ void Game::update()
         // Forward update to active level (if any)
         if (activeLevel)
             activeLevel->update(deltaTime, playerObj);
+
+        // Update any player buff timers
+        playerObj.updateBuff(deltaTime);
 
         // If player died (health <= 0) return to main menu
         if (playerObj.getHealth() <= 0)
@@ -302,6 +383,11 @@ void Game::render()
         window.draw(diamondIcon);
         diamondCount.setString("x " + std::to_string(levelsBeaten));
         window.draw(diamondCount);
+        // Save/Reset buttons in menu
+        window.draw(saveButton);
+        window.draw(saveText);
+        window.draw(resetButton);
+        window.draw(resetText);
     }
     else if (state == GameState::LEVEL)
     {
@@ -314,6 +400,17 @@ void Game::render()
         // Draw active level-specific sprites/entities
         if (activeLevel)
             activeLevel->draw(window);
+
+        // (no save/reset buttons in-level)
+
+        // debug overlay
+        if (debugEnabled)
+        {
+            sf::Text dbg(playerObj.toString(), font, 14);
+            dbg.setFillColor(sf::Color::Red);
+            dbg.setPosition(10, 500);
+            window.draw(dbg);
+        }
     }
     else if (state == GameState::VICTORY)
     {

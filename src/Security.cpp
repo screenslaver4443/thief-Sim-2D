@@ -20,7 +20,11 @@ void Security::chase(PlayerThief &player, float deltaTime)
     // chase only when within a range
     if (dist < 300)
     {
-        std::cout << "Security chasing player!\n";
+        if (!isChasing)
+        {
+            std::cout << "Security chasing player!\n";
+            isChasing = true;
+        }
         // move at half player speed in px/sec; player speed ~200 so security ~100
         float speed = 100.0f;
         if (dist > 1.0f)
@@ -36,6 +40,14 @@ void Security::chase(PlayerThief &player, float deltaTime)
             std::cout << "Player caught! Game Over!\n";
             player.setHealth(0);
             // actual scene change handled in Game::update
+        }
+    }
+    else
+    {
+        if (isChasing)
+        {
+            // stopped chasing
+            isChasing = false;
         }
     }
 }

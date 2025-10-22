@@ -5,6 +5,9 @@
 
 class Security : public Employee
 {
+private:
+    bool isChasing = false;
+
 public:
     Security();
     void chase(PlayerThief &player, float deltaTime);
