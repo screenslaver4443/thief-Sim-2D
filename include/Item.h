@@ -1,17 +1,19 @@
 #ifndef ITEM_H
 #define ITEM_H
+// item class to inherit by loot
 
 #include <string>
 
 #include "Level.h"
 #include "Object.h"
 
-class Item : virtual public Object, virtual public Level {
- protected:
+class Item : virtual public Object, virtual public Level
+{
+protected:
   std::string type;
   double value;
 
- public:
+public:
   std::string getType();
   void setType(std::string type);
   double getValue();

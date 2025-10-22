@@ -1,5 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
+// Base Level class we will use in LevelOne, LevelTwo, and LevelThree
+// this way it is less repetitive :3
 
 #include <vector>
 #include "Object.h"
@@ -7,7 +9,6 @@
 
 class PlayerThief;
 
-// Base Level class we will use in LevelOne, LevelTwo, and LevelThree
 class Level
 {
 protected:
@@ -25,16 +26,17 @@ public:
     int getWidth() const;
     int getHeight() const;
     virtual void load();
-    // Optional per-level update/draw hooks. Default no-op so older levels
-    // that don't override them will continue to work.
+
     virtual void update(float deltaTime, PlayerThief &player) {}
     virtual void draw(sf::RenderWindow &window) {}
-    // Does this level contain an Employee (affects global suspicion)?
     virtual bool hasEmployee() const { return false; }
 };
 
 #endif
 #ifndef LEVEL_H
+
+// upload errors: different people working at same time led to merge clahes, so
+// this was the fix
 #define LEVEL_H
 
 #include <vector>
@@ -43,7 +45,6 @@ public:
 
 class PlayerThief;
 
-// Base Level class we will use in LevelOne, LevelTwo, and LevelThree
 class Level
 {
 protected:
@@ -61,8 +62,6 @@ public:
     int getWidth() const;
     int getHeight() const;
     virtual void load();
-    // Optional per-level update/draw hooks. Default no-op so older levels
-    // that don't override them will continue to work.
     virtual void update(float deltaTime, PlayerThief &player) {}
     virtual void draw(sf::RenderWindow &window) {}
 };

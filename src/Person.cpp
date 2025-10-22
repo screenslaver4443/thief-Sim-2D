@@ -1,4 +1,5 @@
 #include "Person.h"
+// person logic to be inherited by NPCs
 
 Person::Person()
     : name("Unnamed"), age(0), isAlive(true), money(0.0f), health(100) {}

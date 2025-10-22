@@ -1,4 +1,5 @@
 #include "UI.h"
+// handles object collision and interactions
 
 UI::UI()
 {

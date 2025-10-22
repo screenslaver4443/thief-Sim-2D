@@ -20,18 +20,16 @@ void AllyThief::healPlayer(PlayerThief &player)
     const int MAX_HEALTH = 100;
     if (player.intersects(*this) && cooldown <= 0.f)
     {
-        // heal based on skill (skill=1 -> full heal, higher -> still full but buff scales)
-        int healAmount = 20 * skill; // additive heal amount
+        int healAmount = 20 * skill;
         int newHealth = player.getHealth() + healAmount;
         if (newHealth > MAX_HEALTH)
             newHealth = MAX_HEALTH;
         player.setHealth(newHealth);
         player.setJustHealed(true);
-        // apply a small temporary speed buff based on ally skill
         float multiplier = 1.0f + 0.1f * static_cast<float>(skill); // e.g., skill=1 -> 1.1x
         float duration = 2.0f * static_cast<float>(skill);          // seconds
         player.applySpeedBuff(multiplier, duration);
-        cooldown = 3.0f; // 3 second cooldown between heals
+        cooldown = 3.0f;
         std::cout << "Ally Thief healed the player by " << healAmount << " and applied speed buff x" << multiplier << " for " << duration << "s\n";
     }
 }

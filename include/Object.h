@@ -1,5 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
+// core object code to inherit
 
 #include <SFML/Graphics.hpp>
 

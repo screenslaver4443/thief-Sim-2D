@@ -1,6 +1,6 @@
 //
 // Created by Nikolai Pesudovs on 14/10/2025.
-//
+// core game logic
 #ifndef GAME_H
 #define GAME_H
 
@@ -12,6 +12,11 @@
 #include <SFML/Graphics.hpp>
 #include "PlayerThief.h"
 #include <iostream>
+// include levels and save manager so Game has access to themm
+#include "LevelOne.h"
+#include "LevelTwo.h"
+#include "LevelThree.h"
+#include "SaveManager.h"
 
 enum class GameState
 {
@@ -55,6 +60,18 @@ private:
     // levelzzzzz
     sf::Sprite levelButtons[3];
     sf::Text levelText[3];
+
+    sf::Sprite saveButton;
+    sf::Sprite resetButton;
+    sf::Text saveText;
+    sf::Text resetText;
+
+    LevelOne levelOne;
+    LevelTwo levelTwo;
+    LevelThree levelThree;
+    Level *activeLevel = nullptr;
+    bool debugEnabled = false;
+    SaveManager saveManager;
 
 public:
     Game(sf::RenderWindow &win);

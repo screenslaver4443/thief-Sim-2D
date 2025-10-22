@@ -1,5 +1,6 @@
 #ifndef PLAYERTHIEF_H
 #define PLAYERTHIEF_H
+// player logic
 
 #include "Object.h"
 #include <SFML/Graphics.hpp>
@@ -11,11 +12,11 @@ class PlayerThief : public Object, public Savable
 private:
     int health;
     bool justHealed = false;
-    float speed = 200.0f; // default player movement speed (px/sec)
-    // temporary speed buff
+    float speed = 200.0f;
+
     bool speedBuffActive = false;
-    float speedBuffTimer = 0.f;     // seconds remaining
-    float speedBuffDuration = 5.0f; // default buff lasts 5s
+    float speedBuffTimer = 0.f;
+    float speedBuffDuration = 5.0f;
 
 public:
     PlayerThief();

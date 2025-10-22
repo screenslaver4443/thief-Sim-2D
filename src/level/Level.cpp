@@ -1,5 +1,7 @@
 #include "Level.h"
 #include <iostream>
+// Base Level we will use in LevelOne, LevelTwo, and LevelThree
+// this way it is less repetitive :3
 
 Level::Level() : width(800), height(600) {}
 

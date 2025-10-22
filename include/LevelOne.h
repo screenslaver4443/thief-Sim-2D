@@ -1,5 +1,6 @@
 #ifndef LEVELONE_H
 #define LEVELONE_H
+// first level logic
 
 #include "Level.h"
 

@@ -1,5 +1,6 @@
 #ifndef SAVEMANAGER_H
 #define SAVEMANAGER_H
+// inherits from savable, to keep track of save ID
 
 #include <vector>
 #include <string>
@@ -13,7 +14,7 @@ private:
 public:
     void registerSavable(Savable *s) { registry.push_back(s); }
 
-    // Save all registered objects into directory (files named <id>.sav)
+    // Save all registered objects into directory (egxample: files named <id>.sav)
     bool saveAll(const std::string &dir) const
     {
         for (auto *s : registry)

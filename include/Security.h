@@ -1,5 +1,7 @@
 #ifndef SECURITY_H
 #define SECURITY_H
+// Security will walk to player at half player speed, and
+// cause gameover if touched
 
 #include "Employee.h"
 

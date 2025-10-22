@@ -1,3 +1,4 @@
+// parent class to thr bad guys
 #include "Criminal.h"
 
 Criminal::Criminal()

@@ -1,6 +1,8 @@
 #include "MafiaBoss.h"
 #include <iostream>
 #include <cmath>
+// mafia boss will inherit from criminal and provide speed boost to player
+// when touched
 
 MafiaBoss::MafiaBoss() : active(false)
 {
@@ -19,7 +21,6 @@ void MafiaBoss::update(Security &security, PlayerThief &player, float deltaTime)
     float dy = secPos.y - myPos.y;
     float dist = std::sqrt(dx * dx + dy * dy);
 
-    // move towards security at speed 2.5 units per second
     if (dist > 1.0f)
     {
         float speed = 120.0f; // px/sec
@@ -29,7 +30,6 @@ void MafiaBoss::update(Security &security, PlayerThief &player, float deltaTime)
         setPosY(myPos.y + ny * speed * deltaTime);
     }
 
-    // If player touches boss, boss takes out security and both are removed
     if (player.intersects(*this))
     {
         std::cout << "Boss touched! Boss and security removed from level\n";

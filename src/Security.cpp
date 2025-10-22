@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 #include "Person.h"
+// Security will walk to player at half player speed, and
+// cause gameover if touched
 
 Security::Security()
 {
@@ -17,7 +19,7 @@ void Security::chase(PlayerThief &player, float deltaTime)
     float dy = playerPos.y - myPos.y;
     float dist = std::sqrt(dx * dx + dy * dy);
 
-    // chase only when within a range
+    // chase only when within a range, so that player isny rushed
     if (dist < 300)
     {
         if (!isChasing)
@@ -25,7 +27,6 @@ void Security::chase(PlayerThief &player, float deltaTime)
             std::cout << "Security chasing player!\n";
             isChasing = true;
         }
-        // move at half player speed in px/sec; player speed ~200 so security ~100
         float speed = 100.0f;
         if (dist > 1.0f)
         {
@@ -39,14 +40,12 @@ void Security::chase(PlayerThief &player, float deltaTime)
         {
             std::cout << "Player caught! Game Over!\n";
             player.setHealth(0);
-            // actual scene change handled in Game::update
         }
     }
     else
     {
         if (isChasing)
         {
-            // stopped chasing
             isChasing = false;
         }
     }

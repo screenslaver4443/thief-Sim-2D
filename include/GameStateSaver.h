@@ -1,5 +1,6 @@
 #ifndef GAMESTATESAVER_H
 #define GAMESTATESAVER_H
+// saves the diamonds collected intiger via levels beaten
 
 #include "Savable.h"
 #include <string>
@@ -12,7 +13,10 @@ private:
 
 public:
     GameStateSaver() = default;
-    void setTarget(int *t) { target = t; }
+    void setTarget(int *t)
+    {
+        target = t;
+    }
 
     bool saveToFile(const std::string &path) const override
     {
@@ -45,7 +49,10 @@ public:
         return true;
     }
 
-    std::string getSaveId() const override { return "gamestate"; }
+    std::string getSaveId() const override
+    {
+        return "gamestate";
+    }
 };
 
 #endif

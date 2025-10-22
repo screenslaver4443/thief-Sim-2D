@@ -1,3 +1,5 @@
+// will cause a suspition counter to build.
+// removes heart each time counter reaches 10.
 #include "Employee.h"
 #include <iostream>
 #include <cmath>

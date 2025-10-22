@@ -1,5 +1,7 @@
 #ifndef MAFIABOSS_H
 #define MAFIABOSS_H
+// mafia boss will inherit from criminal and provide speed boost to player
+// when touched
 
 #include "Security.h"
 #include "Criminal.h"

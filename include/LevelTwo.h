@@ -1,5 +1,6 @@
 #ifndef LEVEL_TWO_H
 #define LEVEL_TWO_H
+// second level logic
 
 #include "Level.h"
 #include "AllyThief.h"

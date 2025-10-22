@@ -1,6 +1,7 @@
 #include "PlayerThief.h"
 #include <fstream>
 #include <sstream>
+// player logic
 
 PlayerThief::PlayerThief() : health(100) {}
 
@@ -64,7 +65,6 @@ void PlayerThief::updateBuff(float deltaTime)
         speedBuffTimer -= deltaTime;
         if (speedBuffTimer <= 0.f)
         {
-            // revert speed to default (assume default is 200.0f)
             speed = 200.0f;
             speedBuffActive = false;
             speedBuffTimer = 0.f;
@@ -77,7 +77,6 @@ bool PlayerThief::saveToFile(const std::string &path) const
     std::ofstream ofs(path);
     if (!ofs.is_open())
         return false;
-    // simple whitespace-separated format: posX posY health speed
     ofs << posX << " " << posY << " " << health << " " << speed << "\n";
     ofs.close();
     return true;

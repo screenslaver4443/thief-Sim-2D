@@ -1,4 +1,5 @@
-//
+// will cause a suspition counter to build.
+// removes heart each time counter reaches 10.
 #ifndef EMPLOYEE_H
 #define EMPLOYEE_H
 

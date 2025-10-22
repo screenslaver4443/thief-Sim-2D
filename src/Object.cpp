@@ -1,4 +1,5 @@
 #include "Object.h"
+// core object code to inherit
 
 Object::Object()
     : posX(0), posY(0), sizeX(32), sizeY(32), gravity(false), collision(false) {}

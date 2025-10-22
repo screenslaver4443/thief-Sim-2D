@@ -1,5 +1,7 @@
 #ifndef STOREOWNER_H
 #define STOREOWNER_H
+// Store owner will blovk off an area as inaccessable, or else
+// gameover
 
 #include "Employee.h"
 #include <SFML/Graphics.hpp>

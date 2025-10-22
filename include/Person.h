@@ -1,5 +1,6 @@
 #ifndef PERSON_H
 #define PERSON_H
+// person logic to be inherited by NPCs
 
 #include "Object.h"
 #include <string>

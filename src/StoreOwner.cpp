@@ -1,3 +1,5 @@
+// Store owner will blovk off an area as inaccessable, or else
+// gameover
 #include "StoreOwner.h"
 
 StoreOwner::StoreOwner(int x, int y)
@@ -10,7 +12,6 @@ StoreOwner::StoreOwner(int x, int y)
 void StoreOwner::setupZone(float width, float height)
 {
     detectionZone.setSize(sf::Vector2f(width, height));
-    // set the origin to the center to make positioning easier
     detectionZone.setOrigin(width / 2, height / 2);
     detectionZone.setFillColor(sf::Color(255, 0, 0, 80));
 }

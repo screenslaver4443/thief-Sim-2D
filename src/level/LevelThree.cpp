@@ -1,5 +1,6 @@
 #include "LevelThree.h"
 #include <iostream>
+// third level logic
 
 LevelThree::LevelThree() : Level(800, 600), bossActivated(false)
 {
@@ -63,7 +64,8 @@ void LevelThree::load()
     security.setHealth(100);
     boss.setIsAlive(true);
     boss.setHealth(100);
-    // give boss a skill level (affects the temporary buff strength/duration)
+    // give boss a skill level (affects the temporary buff strength/duration).
+    // inheritance wooooooo
     boss.setSkill(2);
 }
 
@@ -72,10 +74,6 @@ void LevelThree::update(float deltaTime, PlayerThief &player)
     employee.update(deltaTime, player);
     security.chase(player, deltaTime);
 
-    // Boss no longer targets security; boss remains idle at top-middle.
-    // If we ever want a more complex behavior, implement it here.
-
-    // Boss touch: if player touches boss, apply a temporary speed buff based on boss skill
     if (boss.getIsAlive() && player.intersects(boss))
     {
         int skill = boss.getSkill();
@@ -87,7 +85,6 @@ void LevelThree::update(float deltaTime, PlayerThief &player)
         boss.setHealth(0);
     }
 
-    // Sync sprites with entity positions (always sync to avoid visual lag)
     employeeSprite.setPosition(employee.getPosX(), employee.getPosY());
     securitySprite.setPosition(security.getPosX(), security.getPosY());
     bossSprite.setPosition(boss.getPosX(), boss.getPosY());
